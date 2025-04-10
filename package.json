@@ -1,7 +1,27 @@
 {
-  "name": "nuxt-app",
+  "name": "todos",
+  "version": "1.0.0",
   "private": true,
+  "description": "📝 Nuxt 3 ToDo app with local-first caching and offline support using https://github.com/directus/rstore. Built for seamless offline experience.",
+  "keywords": [
+    "nuxt3",
+    "drizzle-orm",
+    "postgresql",
+    "local-first",
+    "offline-support"
+  ],
+  "homepage": "https://github.com/thecodingmontana/todos#readme",
+  "bugs": {
+    "url": "https://github.com/thecodingmontana/todos/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thecodingmontana/todos.git"
+  },
+  "license": "MIT",
+  "author": "thecodingmontana",
   "type": "module",
+  "main": "index.js",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
@@ -19,5 +39,6 @@
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
+  "devDependencies": {},
   "packageManager": "pnpm@10.7.0+sha512.6b865ad4b62a1d9842b61d674a393903b871d9244954f652b8842c2b553c72176b278f64c463e52d40fff8aba385c235c8c9ecf5cc7de4fd78b8bb6d49633ab6"
 }
