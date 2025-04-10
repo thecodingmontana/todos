@@ -58,6 +58,6 @@ export default defineNuxtConfig({
     classPrefix: '',
     classSuffix: '',
     storage: 'localStorage', // or 'sessionStorage' or 'cookie'
-    storageKey: 'use-odama-color-mode',
+    storageKey: 'todos-color-mode',
   },
 })
