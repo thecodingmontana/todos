@@ -8,7 +8,7 @@ import {
   varchar,
 } from 'drizzle-orm/pg-core'
 
-export const userTable = pgTable(
+export const user = pgTable(
   'user',
   {
     id: text('id').primaryKey(),
@@ -29,13 +29,13 @@ export const userTable = pgTable(
   }),
 )
 
-export const todosTable = pgTable('todos', {
+export const todos = pgTable('todos', {
   id: text('id').primaryKey(),
   name: text('name').notNull(),
   is_completed: boolean('is_completed').notNull().default(false),
   userId: text('user_id')
     .notNull()
-    .references(() => userTable.id, { onDelete: 'cascade' }),
+    .references(() => user.id, { onDelete: 'cascade' }),
   createdAt: timestamp('createdAt', { mode: 'date', precision: 3 })
     .notNull()
     .defaultNow(),
@@ -49,11 +49,11 @@ table => ({
 }),
 )
 
-export const sessionTable = pgTable('session', {
+export const session = pgTable('session', {
   id: varchar('id', { length: 255 }).primaryKey(),
   userId: text('user_id')
     .notNull()
-    .references(() => userTable.id, { onDelete: 'cascade' }),
+    .references(() => user.id, { onDelete: 'cascade' }),
   expiresAt: timestamp('expires_at', {
     withTimezone: true,
     mode: 'date',
@@ -64,7 +64,7 @@ export const oauthAccountTable = pgTable('oauth_account', {
   id: text('id').primaryKey(),
   userId: text('userId')
     .notNull()
-    .references(() => userTable.id, { onDelete: 'cascade' }),
+    .references(() => user.id, { onDelete: 'cascade' }),
   provider: text('provider').notNull(),
   providerUserId: text('provider_user_id').notNull(),
   createdAt: timestamp('createdAt', { mode: 'date', precision: 3 })
@@ -77,20 +77,20 @@ export const oauthAccountTable = pgTable('oauth_account', {
 })
 
 // relations
-export const userRelations = relations(userTable, ({ many }) => ({
-  todos: many(todosTable),
+export const userRelations = relations(user, ({ many }) => ({
+  todos: many(todos),
 }))
 
 export const todosRelations = relations(
-  todosTable,
+  todos,
   ({ one }) => ({
-    user: one(userTable, {
-      fields: [todosTable.userId],
-      references: [userTable.id],
+    user: one(user, {
+      fields: [todos.userId],
+      references: [user.id],
     }),
   }),
 )
 
-export type User = InferSelectModel<typeof userTable>
-export type Todo = InferSelectModel<typeof todosTable>
-export type Session = InferSelectModel<typeof sessionTable>
+export type User = InferSelectModel<typeof user>
+export type Todo = InferSelectModel<typeof todos>
+export type Session = InferSelectModel<typeof session>

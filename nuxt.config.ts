@@ -11,16 +11,31 @@ export default defineNuxtConfig({
     'shadcn-nuxt',
     '@nuxtjs/color-mode',
     'nuxt-og-image',
+    '@rstore/nuxt-drizzle',
   ],
   devtools: { enabled: true },
   css: ['~/assets/css/tailwind.css'],
+  site: {
+    url: process.env.NUXT_PUBLIC_SITE_URL,
+    name: process.env.NUXT_PUBLIC_SITE_NAME,
+  },
+  colorMode: {
+    preference: 'system', // default value of $colorMode.preference
+    fallback: 'light', // fallback value if not system preference found
+    hid: 'nuxt-color-mode-script',
+    globalName: '__NUXT_COLOR_MODE__',
+    componentName: 'ColorScheme',
+    classPrefix: '',
+    classSuffix: '',
+    storage: 'localStorage', // or 'sessionStorage' or 'cookie'
+    storageKey: 'todos-color-mode',
+  },
   future: {
     compatibilityVersion: 4,
   },
   compatibilityDate: '2024-11-01',
   vite: {
     plugins: [
-      // @ts-expect-error just ignore its not an error
       tailwindcss(),
     ],
   },
@@ -44,20 +59,5 @@ export default defineNuxtConfig({
      * @default "./components/ui"
      */
     componentDir: './components/ui',
-  },
-  site: {
-    url: process.env.NUXT_PUBLIC_SITE_URL,
-    name: process.env.NUXT_PUBLIC_SITE_NAME,
-  },
-  colorMode: {
-    preference: 'system', // default value of $colorMode.preference
-    fallback: 'light', // fallback value if not system preference found
-    hid: 'nuxt-color-mode-script',
-    globalName: '__NUXT_COLOR_MODE__',
-    componentName: 'ColorScheme',
-    classPrefix: '',
-    classSuffix: '',
-    storage: 'localStorage', // or 'sessionStorage' or 'cookie'
-    storageKey: 'todos-color-mode',
   },
 })
