@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     'nuxt-og-image',
     '@rstore/nuxt-drizzle',
+    'nuxt-auth-utils',
   ],
   devtools: { enabled: true },
   css: ['~/assets/css/tailwind.css'],
@@ -29,6 +30,15 @@ export default defineNuxtConfig({
     classSuffix: '',
     storage: 'localStorage', // or 'sessionStorage' or 'cookie'
     storageKey: 'todos-color-mode',
+  },
+  runtimeConfig: {
+    oauth: {
+      github: {
+        clientId: process.env.NUXT_OAUTH_GITHUB_CLIENT_ID,
+        clientSecret: process.env.NUXT_OAUTH_GITHUB_CLIENT_SECRET,
+        redirectURL: process.env.NUXT_OAUTH_GITHUB_REDIRECT_URL,
+      },
+    },
   },
   future: {
     compatibilityVersion: 4,

@@ -13,9 +13,8 @@ export const user = pgTable(
   {
     id: text('id').primaryKey(),
     email: varchar('email', { length: 255 }).notNull().unique(),
-    username: varchar('username', { length: 255 }),
-    emailVerified: boolean('email_verified').notNull().default(false),
-    profilePictureUrl: text('profile_picture_url'),
+    username: varchar('username', { length: 255 }).notNull(),
+    avatar: text('avatar').notNull(),
     createdAt: timestamp('createdAt', { mode: 'date', precision: 3 })
       .notNull()
       .defaultNow(),
@@ -60,7 +59,7 @@ export const session = pgTable('session', {
   }).notNull(),
 })
 
-export const oauthAccountTable = pgTable('oauth_account', {
+export const oauth_account = pgTable('oauth_account', {
   id: text('id').primaryKey(),
   userId: text('userId')
     .notNull()

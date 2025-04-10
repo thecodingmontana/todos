@@ -1,5 +1,19 @@
 <script setup lang="ts">
 import { Button } from '~/components/ui/button'
+
+const { loggedIn } = useUserSession()
+
+watch(() => loggedIn.value, (loggedIn) => {
+  if (loggedIn) {
+    navigateTo('/todos')
+  }
+}, {
+  immediate: true,
+})
+
+const onSigninWith = (provider: 'github') => {
+  window.location.href = `/api/auth/signin/${provider}`
+}
 </script>
 
 <template>
@@ -25,7 +39,10 @@ import { Button } from '~/components/ui/button'
           package. Built to ensure a seamless offline experience.
         </p>
         <div class="flex flex-col items-center">
-          <Button class="w-fit">
+          <Button
+            class="w-fit"
+            @click="onSigninWith('github')"
+          >
             <Icon
               name="akar-icons:github-fill"
               class="size-5"

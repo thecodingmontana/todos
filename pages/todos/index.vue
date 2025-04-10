@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import { ArrowBigDownIcon, ChevronDown, ChevronUp } from 'lucide-vue-next'
 
+definePageMeta({
+  middleware: ['authenticated'],
+})
+
+useHead({
+  title: 'My Todos',
+})
+
 const isAddingTodos = ref(false)
 const todo = ref('')
 const hideTodos = ref(false)
@@ -16,10 +24,10 @@ const onHideTodos = () => {
 
 <template>
   <section class="max-w-3xl w-full mx-auto my-4">
-    <h1 class="text-7xl text-red-200 text-center">
+    <h1 class="text-7xl text-red-200 dark:text-primary text-center">
       todos
     </h1>
-    <div class="mt-4 flex bg-white items-center space-x-2 border-b shadow-slate-400 shadow-lg">
+    <div class="mt-4 flex bg-white items-center space-x-2 border-b shadow-slate-400 dark:shadow shadow-lg">
       <ArrowBigDownIcon
         v-if="isAddingTodos"
         class="w-6 text-gray-400 mx-2 animate-spin"
