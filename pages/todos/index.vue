@@ -13,6 +13,8 @@ const isAddingTodos = ref(false)
 const todo = ref('')
 const hideTodos = ref(false)
 
+const network = reactive(useNetwork())
+
 const onAddTodos = async () => {
 
 }
@@ -73,18 +75,18 @@ const onHideTodos = () => {
           class="font-semibold text-emerald-600 hover:text-emerald-400 dark:text-primary hover:underline"
         >Nuxt.js</NuxtLink>.
       </p>
-      <!-- <p
-        v-if="navigator.onLine"
-        class="text-green-500 mt-2"
+      <p
+        v-if="network.isOnline"
+        class="text-green-600 font-medium mt-2"
       >
         You're online - changes will sync with the server
       </p>
       <p
         v-else
-        class="text-yellow-500 mt-2"
+        class="text-yellow-600 font-medium mt-2"
       >
         You're offline - changes will sync when you reconnect
-      </p> -->
+      </p>
     </div>
   </section>
 </template>

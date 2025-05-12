@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     'nuxt-og-image',
     'nuxt-auth-utils',
+    '@vueuse/nuxt',
   ],
   devtools: { enabled: true },
   css: ['~/assets/css/tailwind.css'],
