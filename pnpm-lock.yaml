@@ -29,9 +29,6 @@ importers:
       '@oslojs/encoding':
         specifier: ^1.1.0
         version: 1.1.0
-      '@rstore/nuxt-drizzle':
-        specifier: ^0.6.6
-        version: 0.6.6(drizzle-orm@0.41.0(@types/pg@8.11.11)(gel@2.0.2)(pg@8.14.1)(postgres@3.4.5))(magicast@0.3.5)(typescript@5.8.3)(vite@6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))
       '@tailwindcss/vite':
         specifier: ^4.1.3
         version: 4.1.3(vite@6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.1))
@@ -53,6 +50,9 @@ importers:
       eslint:
         specifier: ^9.0.0
         version: 9.24.0(jiti@2.4.2)
+      graphql:
+        specifier: ^16.7.1
+        version: 16.11.0
       gsap:
         specifier: ^3.12.7
         version: 3.12.7
@@ -1493,25 +1493,6 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rstore/core@0.6.6':
-    resolution: {integrity: sha512-t9Vv0yLN8MPXZLvGpTfhzjybIo2/OCFaii4gbyGGk4mCe/1V0GAAUW/FtbzbRleEGjEiTA9RvQ/Zc8FaqqvGFg==}
-
-  '@rstore/nuxt-drizzle@0.6.6':
-    resolution: {integrity: sha512-bhtO1QOWGA9KOT6fk++veq8DL2vPtIVPwGDAiD1u2LVFrrtMf0H7MtdyOubesyLZgiaMoSiMlJHKAMMm9QPXCA==}
-    peerDependencies:
-      drizzle-orm: '*'
-
-  '@rstore/nuxt@0.6.6':
-    resolution: {integrity: sha512-U4OF+SbHhKtqIdUaNRi09n7GwRUQUipb0itRyS3pCwyoOg/B/LbOpVNiH98GtpynikBgINwW1Q+BKthEJc1kVw==}
-
-  '@rstore/shared@0.6.6':
-    resolution: {integrity: sha512-QHdtSuaiyan69SeSbW0cMVPBV4h6v7mA7hMNcjAD+sJKEgYd9wR6E0ET5X64yVKdMzreUxiiKnTWZrDMmyDhyg==}
-
-  '@rstore/vue@0.6.6':
-    resolution: {integrity: sha512-SECcOzBD66Jf3LNKJJJo2ZoZ5HsT7+lR9Nk+2V1wwcFsg41PLjjO/nHDXPeIrfUu6HUYKr7WBJOmbaXLkicJ5w==}
-    peerDependencies:
-      vue: ^3.2.29
-
   '@sec-ant/readable-stream@0.4.1':
     resolution: {integrity: sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==}
 
@@ -1534,9 +1515,6 @@ packages:
 
   '@speed-highlight/core@1.2.7':
     resolution: {integrity: sha512-0dxmVj4gxg3Jg879kvFS/msl4s9F3T9UXC1InxgOf7t5NvcPD97u/WTA5vL/IxWHMn7qSxBozqrnnE2wvl1m8g==}
-
-  '@standard-schema/spec@1.0.0':
-    resolution: {integrity: sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA==}
 
   '@stylistic/eslint-plugin@4.2.0':
     resolution: {integrity: sha512-8hXezgz7jexGHdo5WN6JBEIPHCSFyyU4vgbxevu4YLVS5vl+sxqAAGyXSzfNDyR6xMNSH5H1x67nsXcYMOHtZA==}
@@ -3030,6 +3008,10 @@ packages:
 
   graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
+
+  graphql@16.11.0:
+    resolution: {integrity: sha512-mS1lbMsxgQj6hge1XZ6p7GPhbrtFwUFYi3wRzXAC/FmYnyXMTvvI3td3rjmQ2u8ewXueaSvRPWaEcgVVOT9Jnw==}
+    engines: {node: ^12.22.0 || ^14.16.0 || ^16.0.0 || >=17.0.0}
 
   gsap@3.12.7:
     resolution: {integrity: sha512-V4GsyVamhmKefvcAKaoy0h6si0xX7ogwBoBSs2CTJwt7luW0oZzC0LhdkyuKV8PJAXr7Yaj8pMjCKD4GJ+eEMg==}
@@ -6533,52 +6515,6 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.39.0':
     optional: true
 
-  '@rstore/core@0.6.6':
-    dependencies:
-      '@rstore/shared': 0.6.6
-
-  '@rstore/nuxt-drizzle@0.6.6(drizzle-orm@0.41.0(@types/pg@8.11.11)(gel@2.0.2)(pg@8.14.1)(postgres@3.4.5))(magicast@0.3.5)(typescript@5.8.3)(vite@6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))':
-    dependencies:
-      '@nuxt/kit': 3.16.2(magicast@0.3.5)
-      '@rstore/nuxt': 0.6.6(magicast@0.3.5)(typescript@5.8.3)(vite@6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))
-      '@rstore/shared': 0.6.6
-      '@rstore/vue': 0.6.6(typescript@5.8.3)(vue@3.5.13(typescript@5.8.3))
-      drizzle-orm: 0.41.0(@types/pg@8.11.11)(gel@2.0.2)(pg@8.14.1)(postgres@3.4.5)
-      h3: 1.15.1
-      jiti: 2.4.2
-      pathe: 2.0.3
-    transitivePeerDependencies:
-      - magicast
-      - typescript
-      - vite
-      - vue
-
-  '@rstore/nuxt@0.6.6(magicast@0.3.5)(typescript@5.8.3)(vite@6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))':
-    dependencies:
-      '@nuxt/devtools-kit': 2.3.2(magicast@0.3.5)(vite@6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.1))
-      '@nuxt/kit': 3.16.2(magicast@0.3.5)
-      '@rstore/shared': 0.6.6
-      '@rstore/vue': 0.6.6(typescript@5.8.3)(vue@3.5.13(typescript@5.8.3))
-      sirv: 3.0.1
-    transitivePeerDependencies:
-      - magicast
-      - typescript
-      - vite
-      - vue
-
-  '@rstore/shared@0.6.6':
-    dependencies:
-      '@standard-schema/spec': 1.0.0
-
-  '@rstore/vue@0.6.6(typescript@5.8.3)(vue@3.5.13(typescript@5.8.3))':
-    dependencies:
-      '@rstore/core': 0.6.6
-      '@rstore/shared': 0.6.6
-      '@vueuse/core': 12.8.2(typescript@5.8.3)
-      vue: 3.5.13(typescript@5.8.3)
-    transitivePeerDependencies:
-      - typescript
-
   '@sec-ant/readable-stream@0.4.1': {}
 
   '@shuding/opentype.js@1.4.0-beta.0':
@@ -6593,8 +6529,6 @@ snapshots:
   '@sindresorhus/merge-streams@4.0.0': {}
 
   '@speed-highlight/core@1.2.7': {}
-
-  '@standard-schema/spec@1.0.0': {}
 
   '@stylistic/eslint-plugin@4.2.0(eslint@9.24.0(jiti@2.4.2))(typescript@5.8.3)':
     dependencies:
@@ -8195,6 +8129,8 @@ snapshots:
   graceful-fs@4.2.11: {}
 
   graphemer@1.4.0: {}
+
+  graphql@16.11.0: {}
 
   gsap@3.12.7: {}
 

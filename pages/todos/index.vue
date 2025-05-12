@@ -53,5 +53,38 @@ const onHideTodos = () => {
       >
     </div>
     <!-- <Todos v-if="!hideTodos" /> -->
+    <div class="mt-6 text-center text-sm text-muted-foreground">
+      <p>
+        Built with <NuxtLink
+          to="https://rxdb.info"
+          target="_blank"
+          class="font-semibold text-emerald-600 hover:text-emerald-400 dark:text-primary hover:underline"
+        >RxDB</NuxtLink>, <NuxtLink
+          to="https://orm.drizzle.team"
+          target="_blank"
+          class="font-semibold text-emerald-600 hover:text-emerald-400 dark:text-primary hover:underline"
+        >Drizzle ORM</NuxtLink>, <NuxtLink
+          to="https://www.postgresql.org"
+          target="_blank"
+          class="font-semibold text-emerald-600 hover:text-emerald-400 dark:text-primary hover:underline"
+        >PostgreSQL</NuxtLink>, and <NuxtLink
+          to="https://nuxt.com"
+          target="_blank"
+          class="font-semibold text-emerald-600 hover:text-emerald-400 dark:text-primary hover:underline"
+        >Nuxt.js</NuxtLink>.
+      </p>
+      <!-- <p
+        v-if="navigator.onLine"
+        class="text-green-500 mt-2"
+      >
+        You're online - changes will sync with the server
+      </p>
+      <p
+        v-else
+        class="text-yellow-500 mt-2"
+      >
+        You're offline - changes will sync when you reconnect
+      </p> -->
+    </div>
   </section>
 </template>

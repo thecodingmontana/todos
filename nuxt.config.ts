@@ -11,7 +11,6 @@ export default defineNuxtConfig({
     'shadcn-nuxt',
     '@nuxtjs/color-mode',
     'nuxt-og-image',
-    '@rstore/nuxt-drizzle',
     'nuxt-auth-utils',
   ],
   devtools: { enabled: true },
