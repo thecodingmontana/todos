@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ArrowBigDownIcon, ChevronDown, ChevronUp } from 'lucide-vue-next'
+import { toast } from 'vue-sonner'
+import type { Todo } from '~/types'
 
 definePageMeta({
   middleware: ['authenticated'],
@@ -11,21 +13,49 @@ useHead({
 
 const isAddingTodos = ref(false)
 const todo = ref('')
+const todos = ref<Todo[]>([])
 const hideTodos = ref(false)
 
 const network = reactive(useNetwork())
 
 const onAddTodos = async () => {
+  try {
+    if (!todo.value) {
+      return toast.error('Todo name is required!', {
+        position: 'top-center',
+      })
+    }
 
+    if (todo.value.trim()) {
+      const newTodoItem = await useRxdb().addTodo(todo.value)
+      todos.value.push(newTodoItem)
+      todo.value = ''
+
+      toast.success('Successfully added a todo!', {
+        position: 'top-center',
+      })
+    }
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  catch (error: any) {
+    console.log(error)
+    toast.error('error on adding todo!', {
+      position: 'top-center',
+    })
+  }
 }
 
 const onHideTodos = () => {
   hideTodos.value = !hideTodos.value
 }
+
+onMounted(async () => {
+  todos.value = await useRxdb().getAllTodos()
+})
 </script>
 
 <template>
-  <section class="max-w-3xl w-full mx-auto my-4">
+  <section class="max-w-md w-full mx-auto my-4">
     <h1 class="text-7xl text-red-200 dark:text-primary text-center">
       todos
     </h1>
@@ -49,11 +79,13 @@ const onHideTodos = () => {
       <input
         v-model="todo"
         type="text"
-        class="w-full py-3 placeholder:text-gray-300 placeholder:italic text-2xl bg-transparent border-0 outline-0"
+        class="w-full py-3 placeholder:text-zinc-400 placeholder:italic text-2xl bg-transparent border-0 outline-0 text-zinc-500"
         placeholder="What needs to be done?"
         @keyup.enter="onAddTodos"
       >
     </div>
+
+    {{ todos }}
     <!-- <Todos v-if="!hideTodos" /> -->
     <div class="mt-6 text-center text-sm text-muted-foreground">
       <p>

@@ -15,11 +15,11 @@ const todoSchema = {
     id: { type: 'string', maxLength: 255 },
     name: { type: 'string' },
     is_completed: { type: 'boolean' },
-    user_id: { type: 'string' },
-    createdAt: { type: 'string', format: 'date-time' },
-    updated_at: { type: 'string', format: 'date-time' },
+    userId: { type: 'string' },
+    createdAt: { type: 'string' },
+    updatedAt: { type: 'string' },
   },
-  required: ['id', 'name', 'user_id', 'is_completed', 'createdAt'],
+  required: ['id', 'name', 'userId', 'is_completed', 'createdAt'],
 }
 
 class RxdbService {
