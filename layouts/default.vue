@@ -8,35 +8,35 @@ useHead({
     {
       name: 'description',
       content:
-        'Nuxt 3 todo app with local-first caching and offline support using directus rstore package. Built for seamless offline experience.',
+        'A local-first todo app using RxDB, Drizzle ORM, and Nuxt.js. Built for seamless offline experience.',
     },
     {
       property: 'og:description',
       content:
-        'Nuxt 3 todo app with local-first caching and offline support using directus rstore package. Built for seamless offline experience.',
+        'A local-first todo app using RxDB, Drizzle ORM, and Nuxt.js. Built for seamless offline experience.',
     },
     {
       property: 'og:url',
       content:
-        'Nuxt 3 todo app with local-first caching and offline support using directus rstore package. Built for seamless offline experience.',
+        'A local-first todo app using RxDB, Drizzle ORM, and Nuxt.js. Built for seamless offline experience.',
     },
     {
       name: 'twitter:title',
       content:
-        'Nuxt 3 todo app with local-first caching and offline support using directus rstore package. Built for seamless offline experience.',
+        'A local-first todo app using RxDB, Drizzle ORM, and Nuxt.js. Built for seamless offline experience.',
     },
     {
       name: 'twitter:description',
       content:
-        'Nuxt 3 todo app with local-first caching and offline support using directus rstore package. Built for seamless offline experience.',
+        'A local-first todo app using RxDB, Drizzle ORM, and Nuxt.js. Built for seamless offline experience.',
     },
     {
       name: 'twitter:site',
       content:
-        'Nuxt 3 todo app with local-first caching and offline support using directus rstore package. Built for seamless offline experience.',
+        'A local-first todo app using RxDB, Drizzle ORM, and Nuxt.js. Built for seamless offline experience.',
     },
   ],
-  title: `Todos`,
+  title: `Local First Todos`,
 })
 </script>
 

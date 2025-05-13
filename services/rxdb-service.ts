@@ -1,10 +1,9 @@
 import { createRxDatabase, addRxPlugin } from 'rxdb'
 import { getRxStorageLocalstorage } from 'rxdb/plugins/storage-localstorage'
-import { RxDBDevModePlugin } from 'rxdb/plugins/dev-mode'
 import { RxDBUpdatePlugin } from 'rxdb/plugins/update'
 import { RxDBQueryBuilderPlugin } from 'rxdb/plugins/query-builder'
 import { wrappedValidateAjvStorage } from 'rxdb/plugins/validate-ajv'
-import type { Todo } from '~/types'
+// import type { Todo } from '~/types'
 
 const todoSchema = {
   title: 'todo schema',
@@ -18,8 +17,9 @@ const todoSchema = {
     userId: { type: 'string' },
     createdAt: { type: 'string' },
     updatedAt: { type: 'string' },
+    syncStatus: { type: 'string' },
   },
-  required: ['id', 'name', 'userId', 'is_completed', 'createdAt'],
+  required: ['id', 'name', 'userId', 'is_completed', 'createdAt', 'syncStatus'],
 }
 
 class RxdbService {
@@ -28,7 +28,6 @@ class RxdbService {
 
   async initDatabase() {
     addRxPlugin(RxDBUpdatePlugin)
-    addRxPlugin(RxDBDevModePlugin)
     addRxPlugin(RxDBQueryBuilderPlugin)
 
     this._db = await createRxDatabase({
@@ -53,19 +52,44 @@ class RxdbService {
   async syncWithServer() {
     if (!navigator.onLine || !this._db) return
 
-    const serverTodos = await $fetch<Todo[]>('/api/todos')
     const localTodos = await this._db.todos.find().exec()
 
-    for (const t of serverTodos) {
-      const local = localTodos.find((lt: Todo) => lt.id === t.id)
-      const serverDate = new Date(t.updatedAt)
-      const localDate = new Date(local?.updatedAt ?? 0)
+    for (const local of localTodos) {
+      const localTodo = local._data
 
-      if (!local) {
-        await this._db.todos.insert(t)
+      const newTodo = {
+        ...localTodo,
+        updatedAt: new Date().toISOString(),
       }
-      else if (serverDate > localDate) {
-        await this._db.todos.upsert(t)
+
+      try {
+        if (localTodo.syncStatus === 'FAILED' || localTodo.syncStatus === 'PENDING') {
+          newTodo.syncStatus = 'SYNCED'
+          console.log('Creating a todo on server:', newTodo)
+
+          await $fetch('/api/todos/create', {
+            method: 'POST',
+            body: newTodo,
+          })
+
+          await local.update({ $set: newTodo })
+        }
+        else if (localTodo.syncStatus === 'DIRTY') {
+          newTodo.syncStatus = 'SYNCED'
+          console.log('Updating a todo on server:', newTodo)
+
+          await $fetch(`/api/todos/${newTodo.id}/update`, {
+            method: 'PATCH',
+            body: newTodo,
+          })
+
+          await local.update({ $set: newTodo })
+        }
+      }
+      catch (err) {
+        console.error(`Failed to sync todo "${localTodo.name}" (${localTodo.id}):`, err)
+
+        await local.update({ $set: { syncStatus: 'FAILED' } })
       }
     }
   }

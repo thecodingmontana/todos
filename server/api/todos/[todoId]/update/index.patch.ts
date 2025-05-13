@@ -2,7 +2,7 @@ export default defineEventHandler(async (event) => {
   try {
     const session = await requireUserSession(event)
     const todoId = getRouterParam(event, 'todoId')
-    const body = await readBody(event) as { name: string, is_completed: boolean }
+    const body = await readBody(event) as { name: string, is_completed: boolean, syncStatus: 'PENDING' | 'SYNCED' | 'FAILED' }
 
     if (!session) {
       throw createError({
@@ -32,10 +32,18 @@ export default defineEventHandler(async (event) => {
       })
     }
 
+    if (!body.syncStatus || !['PENDING', 'SYNCED', 'FAILED'].includes(body.syncStatus)) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Invalid syncStatus!',
+      })
+    }
+
     const [todo] = await useDrizzle().update(tables.todos).set({
       name: body.name,
       is_completed: body.is_completed,
       updatedAt: new Date(),
+      syncStatus: body.syncStatus,
     }).where(
       and(
         eq(tables.todos.id, todoId),

@@ -17,47 +17,72 @@ export const useRxdb = () => {
         createdAt: now,
         updatedAt: now,
         userId: user.value?.id as string,
+        syncStatus: 'PENDING',
       }
 
-      await rxdbService.db.todos.insert(newTodo)
+      try {
+        if (network.isOnline) {
+          newTodo.syncStatus = 'SYNCED'
 
-      if (network.isOnline) {
-        await $fetch('/api/todos/create', {
-          method: 'POST',
-          body: newTodo,
-        })
+          await $fetch('/api/todos/create', {
+            method: 'POST',
+            body: newTodo,
+          })
+        }
+
+        await rxdbService.db.todos.insert(newTodo)
+        return newTodo
       }
-
-      return newTodo
+      catch (err) {
+        console.error('Failed to add todo:', err)
+        newTodo.syncStatus = 'FAILED'
+        await rxdbService.db.todos.insert(newTodo)
+        return newTodo
+      }
     },
 
     toggleTodo: async (id: string) => {
       const todo = await rxdbService.db.todos.findOne(id).exec()
+      if (!todo) return
 
-      if (todo) {
-        await todo.update({
-          $set: {
-            is_completed: !todo.is_completed,
-            updatedAt: new Date().toISOString(),
-          },
-        })
+      const updatedTodo = {
+        ...todo._data,
+        is_completed: !todo._data.is_completed,
+        updatedAt: new Date().toISOString(),
+        syncStatus: 'DIRTY',
+      }
 
+      try {
         if (network.isOnline) {
+          updatedTodo.syncStatus = 'SYNCED'
+
           await $fetch(`/api/todos/${id}/update`, {
             method: 'PATCH',
-            body: todo._data,
+            body: updatedTodo,
           })
         }
+
+        await todo.update({ $set: updatedTodo })
+      }
+      catch (err) {
+        console.error('Failed to sync toggle to server:', err)
+        updatedTodo.syncStatus = 'FAILED'
+        await todo.update({ $set: updatedTodo })
       }
     },
 
     deleteTodo: async (id: string) => {
-      await rxdbService.db.todos.findOne(id).remove()
+      try {
+        await rxdbService.db.todos.findOne(id).remove()
 
-      if (network.isOnline) {
-        await $fetch(`/api/todos/${id}/delete`, {
-          method: 'DELETE',
-        })
+        if (network.isOnline) {
+          await $fetch(`/api/todos/${id}/delete`, {
+            method: 'DELETE',
+          })
+        }
+      }
+      catch (err) {
+        console.error('Failed to delete todo:', err)
       }
     },
 
@@ -66,7 +91,12 @@ export const useRxdb = () => {
     },
 
     syncWithServer: async () => {
-      await rxdbService.syncWithServer()
+      try {
+        await rxdbService.syncWithServer()
+      }
+      catch (err) {
+        console.error('Failed to sync with server:', err)
+      }
     },
   }
 }

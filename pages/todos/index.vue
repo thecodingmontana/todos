@@ -14,11 +14,11 @@ useHead({
 const isAddingTodos = ref(false)
 const todo = ref('')
 const todos = ref<Todo[]>([])
+const network = reactive(useNetwork())
 const hideTodos = ref(false)
 
-const network = reactive(useNetwork())
-
 const onAddTodos = async () => {
+  isAddingTodos.value = true
   try {
     if (!todo.value) {
       return toast.error('Todo name is required!', {
@@ -28,7 +28,7 @@ const onAddTodos = async () => {
 
     if (todo.value.trim()) {
       const newTodoItem = await useRxdb().addTodo(todo.value)
-      todos.value.push(newTodoItem)
+      todos.value.push(newTodoItem!)
       todo.value = ''
 
       toast.success('Successfully added a todo!', {
@@ -43,6 +43,9 @@ const onAddTodos = async () => {
       position: 'top-center',
     })
   }
+  finally {
+    isAddingTodos.value = false
+  }
 }
 
 const onHideTodos = () => {
@@ -51,6 +54,12 @@ const onHideTodos = () => {
 
 onMounted(async () => {
   todos.value = await useRxdb().getAllTodos()
+})
+
+watch(network, async (newVal) => {
+  if (newVal.isOnline) {
+    todos.value = await useRxdb().getAllTodos()
+  }
 })
 </script>
 

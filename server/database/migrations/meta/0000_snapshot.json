@@ -1,5 +1,5 @@
 {
-  "id": "6bba8510-d561-4fd9-81eb-8f2be041b24c",
+  "id": "fbe76b9f-897b-41b0-b07a-6ff09ec7307d",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -142,6 +142,14 @@
           "primaryKey": false,
           "notNull": true
         },
+        "syncStatus": {
+          "name": "syncStatus",
+          "type": "syncStatusEnum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'PENDING'"
+        },
         "createdAt": {
           "name": "createdAt",
           "type": "timestamp (3)",
@@ -214,20 +222,13 @@
           "name": "username",
           "type": "varchar(255)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
-        "email_verified": {
-          "name": "email_verified",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true,
-          "default": false
-        },
-        "profile_picture_url": {
-          "name": "profile_picture_url",
+        "avatar": {
+          "name": "avatar",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "createdAt": {
           "name": "createdAt",
@@ -276,7 +277,17 @@
       "isRLSEnabled": false
     }
   },
-  "enums": {},
+  "enums": {
+    "public.syncStatusEnum": {
+      "name": "syncStatusEnum",
+      "schema": "public",
+      "values": [
+        "PENDING",
+        "SYNCED",
+        "FAILED"
+      ]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "roles": {},

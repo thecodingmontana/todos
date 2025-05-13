@@ -1,9 +1,7 @@
-import { v4 as uuidv4 } from 'uuid'
-
 export default defineEventHandler(async (event) => {
   try {
     const session = await requireUserSession(event)
-    const body = await readBody(event) as { name: string }
+    const body = await readBody(event) as { name: string, syncStatus: 'PENDING' | 'SYNCED' | 'FAILED', id: string }
 
     if (!session) {
       throw createError({
@@ -19,10 +17,25 @@ export default defineEventHandler(async (event) => {
       })
     }
 
+    if (!body.id || typeof body.id !== 'string') {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'todo id is required!',
+      })
+    }
+
+    if (!body.syncStatus || !['PENDING', 'SYNCED', 'FAILED'].includes(body.syncStatus)) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'Invalid syncStatus!',
+      })
+    }
+
     const [todo] = await useDrizzle().insert(tables.todos).values({
-      id: uuidv4(),
+      id: body.id,
       name: body.name,
       userId: session.user.id,
+      syncStatus: body.syncStatus,
       createdAt: new Date(),
       updatedAt: new Date(),
     }).returning()
@@ -31,6 +44,7 @@ export default defineEventHandler(async (event) => {
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   catch (error: any) {
+    console.log(error)
     const errorMessage = error ? error.statusMessage : error.message
     throw createError({
       statusCode: error ? error.statusCode : 500,

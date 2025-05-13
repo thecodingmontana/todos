@@ -12,4 +12,5 @@ export interface Todo {
   userId: string
   createdAt: string
   updatedAt: string
+  syncStatus: 'PENDING' | 'SYNCED' | 'FAILED' | 'DIRTY'
 }

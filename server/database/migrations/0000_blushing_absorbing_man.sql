@@ -1,3 +1,4 @@
+CREATE TYPE "public"."syncStatusEnum" AS ENUM('PENDING', 'SYNCED', 'FAILED');--> statement-breakpoint
 CREATE TABLE "oauth_account" (
 	"id" text PRIMARY KEY NOT NULL,
 	"userId" text NOT NULL,
@@ -18,6 +19,7 @@ CREATE TABLE "todos" (
 	"name" text NOT NULL,
 	"is_completed" boolean DEFAULT false NOT NULL,
 	"user_id" text NOT NULL,
+	"syncStatus" "syncStatusEnum" DEFAULT 'PENDING' NOT NULL,
 	"createdAt" timestamp (3) DEFAULT now() NOT NULL,
 	"updated_at" timestamp (3)
 );
@@ -25,9 +27,8 @@ CREATE TABLE "todos" (
 CREATE TABLE "user" (
 	"id" text PRIMARY KEY NOT NULL,
 	"email" varchar(255) NOT NULL,
-	"username" varchar(255),
-	"email_verified" boolean DEFAULT false NOT NULL,
-	"profile_picture_url" text,
+	"username" varchar(255) NOT NULL,
+	"avatar" text NOT NULL,
 	"createdAt" timestamp (3) DEFAULT now() NOT NULL,
 	"updated_at" timestamp (3),
 	CONSTRAINT "user_email_unique" UNIQUE("email")

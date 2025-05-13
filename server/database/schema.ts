@@ -2,11 +2,19 @@ import { type InferSelectModel, relations } from 'drizzle-orm'
 import {
   boolean,
   index,
+  pgEnum,
   pgTable,
   text,
   timestamp,
   varchar,
 } from 'drizzle-orm/pg-core'
+
+export const syncStatusEnum = pgEnum('syncStatusEnum', [
+  'PENDING',
+  'SYNCED',
+  'FAILED',
+  'DIRTY',
+])
 
 export const user = pgTable(
   'user',
@@ -35,6 +43,7 @@ export const todos = pgTable('todos', {
   userId: text('user_id')
     .notNull()
     .references(() => user.id, { onDelete: 'cascade' }),
+  syncStatus: syncStatusEnum('syncStatus').notNull().default('PENDING'),
   createdAt: timestamp('createdAt', { mode: 'date', precision: 3 })
     .notNull()
     .defaultNow(),
