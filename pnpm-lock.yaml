@@ -1846,28 +1846,6 @@ packages:
     cpu: [x64]
     os: [win32]
 
-<<<<<<< HEAD
-  '@rstore/core@0.6.8':
-    resolution: {integrity: sha512-ijl3PYG8IZNf0mZx5arMf5mFzTq2l2KmKJ6z7eiaJMYj2eyGeIiXmLGajjJmFoAlhwKVLwJMRpw0M5gZ6UliSA==}
-
-  '@rstore/nuxt-drizzle@0.6.8':
-    resolution: {integrity: sha512-TyDnPFuCMxmVmi5v8dFkg4oPwo98Bxzgw1xfjNFmsjz5k2f60Iru3sl3EJ71/ZZNrhz0nogPB1PT+YAoJ40O7g==}
-    peerDependencies:
-      drizzle-orm: '*'
-
-  '@rstore/nuxt@0.6.8':
-    resolution: {integrity: sha512-CUZYyE1gJtWlDNWu6ZjA44M3/3iS2YOQ50ENm31ctayeiGuUNDeY0hxV7TGQa66xZPlrInmmRbtiYd91AIFjzQ==}
-
-  '@rstore/shared@0.6.8':
-    resolution: {integrity: sha512-ISKPQPOEFhshQQI5s5B7hv/gWL67LGGrjwAmwPfNlEDcqFPO9ZnT2RCdu+GFnBzoq55py0PGGwPOSrKfxrFfkg==}
-
-  '@rstore/vue@0.6.8':
-    resolution: {integrity: sha512-0NhCsJZeOR130HhU7fRkMPUBJDwiarUMlk0WyqaUbDJh/+Wh2SCh3aXSVrJWlwcquOykCr9xjQeLNU8KxJM8+w==}
-    peerDependencies:
-      vue: ^3.2.29
-
-=======
->>>>>>> b17da14f802ed0650c045b42c74f555c58d0a0da
   '@sec-ant/readable-stream@0.4.1':
     resolution: {integrity: sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==}
 
@@ -7969,55 +7947,6 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.39.0':
     optional: true
 
-<<<<<<< HEAD
-  '@rstore/core@0.6.8':
-    dependencies:
-      '@rstore/shared': 0.6.8
-
-  '@rstore/nuxt-drizzle@0.6.8(drizzle-orm@0.41.0(@types/pg@8.11.11)(gel@2.0.2)(pg@8.14.1)(postgres@3.4.5))(magicast@0.3.5)(typescript@5.8.3)(vite@6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))':
-    dependencies:
-      '@nuxt/kit': 3.16.2(magicast@0.3.5)
-      '@rstore/nuxt': 0.6.8(magicast@0.3.5)(typescript@5.8.3)(vite@6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))
-      '@rstore/shared': 0.6.8
-      '@rstore/vue': 0.6.8(typescript@5.8.3)(vue@3.5.13(typescript@5.8.3))
-      drizzle-orm: 0.41.0(@types/pg@8.11.11)(gel@2.0.2)(pg@8.14.1)(postgres@3.4.5)
-      h3: 1.15.1
-      jiti: 2.4.2
-      pathe: 2.0.3
-    transitivePeerDependencies:
-      - magicast
-      - typescript
-      - vite
-      - vue
-
-  '@rstore/nuxt@0.6.8(magicast@0.3.5)(typescript@5.8.3)(vite@6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.1))(vue@3.5.13(typescript@5.8.3))':
-    dependencies:
-      '@nuxt/devtools-kit': 2.3.2(magicast@0.3.5)(vite@6.2.6(@types/node@22.14.0)(jiti@2.4.2)(lightningcss@1.29.2)(terser@5.39.0)(yaml@2.7.1))
-      '@nuxt/kit': 3.16.2(magicast@0.3.5)
-      '@rstore/shared': 0.6.8
-      '@rstore/vue': 0.6.8(typescript@5.8.3)(vue@3.5.13(typescript@5.8.3))
-      sirv: 3.0.1
-    transitivePeerDependencies:
-      - magicast
-      - typescript
-      - vite
-      - vue
-
-  '@rstore/shared@0.6.8':
-    dependencies:
-      '@standard-schema/spec': 1.0.0
-
-  '@rstore/vue@0.6.8(typescript@5.8.3)(vue@3.5.13(typescript@5.8.3))':
-    dependencies:
-      '@rstore/core': 0.6.8
-      '@rstore/shared': 0.6.8
-      '@vueuse/core': 12.8.2(typescript@5.8.3)
-      vue: 3.5.13(typescript@5.8.3)
-    transitivePeerDependencies:
-      - typescript
-
-=======
->>>>>>> b17da14f802ed0650c045b42c74f555c58d0a0da
   '@sec-ant/readable-stream@0.4.1': {}
 
   '@shuding/opentype.js@1.4.0-beta.0':

@@ -12,10 +12,6 @@ useHead({
   title: 'My Todos',
 })
 
-const store = useStore()
-
-const { data } = await store.todos?.queryMany()
-
 const isAddingTodos = ref(false)
 const todo = ref('')
 const { todos } = useTodos()
