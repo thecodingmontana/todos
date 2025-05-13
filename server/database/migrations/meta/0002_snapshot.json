@@ -1,9 +1,35 @@
 {
-  "id": "dd91f5a9-2307-4cf5-8658-880eccffbc24",
-  "prevId": "15c9b833-93f7-442d-976a-870b7fec3d4f",
+  "id": "62a02210-69d4-4e8e-8de9-3699acfc5cca",
+  "prevId": "3bc2b90b-70fb-4dcd-9fd1-f61857d47582",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.cron_jobs": {
+      "name": "cron_jobs",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.oauth_account": {
       "name": "oauth_account",
       "schema": "",
@@ -142,6 +168,14 @@
           "primaryKey": false,
           "notNull": true
         },
+        "syncStatus": {
+          "name": "syncStatus",
+          "type": "syncStatusEnum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'PENDING'"
+        },
         "createdAt": {
           "name": "createdAt",
           "type": "timestamp (3)",
@@ -269,7 +303,18 @@
       "isRLSEnabled": false
     }
   },
-  "enums": {},
+  "enums": {
+    "public.syncStatusEnum": {
+      "name": "syncStatusEnum",
+      "schema": "public",
+      "values": [
+        "PENDING",
+        "SYNCED",
+        "FAILED",
+        "DIRTY"
+      ]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "roles": {},

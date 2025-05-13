@@ -17,9 +17,9 @@ const onSigninWith = (provider: 'github') => {
 </script>
 
 <template>
-  <div class="flex flex-col max-w-xl w-full items-center gap-3">
+  <div class="flex flex-col max-w-xl w-full items-center gap-3 px-4">
     <h1 class="text-2xl lg:text-3xl font-medium text-center">
-      Welcome to Nuxt Todos by <br>
+      Welcome to Local First Todos by <br>
       <NuxtLink
         to="https://x.com/codewithmontana"
         target="_blank"
@@ -32,11 +32,14 @@ const onSigninWith = (provider: 'github') => {
           This is a simple Nuxt 3 ToDo app that demonstrates local-first caching and offline
           support using
           <NuxtLink
-            to="https://rstore.dev"
+            to="https://rxdb.info"
             target="_blank"
             class="font-semibold text-emerald-600 hover:text-emerald-400 dark:text-primary"
-          >rstore</NuxtLink>
+          >RxDB</NuxtLink>
           package. Built to ensure a seamless offline experience.
+        </p>
+        <p class="text-center text-muted-foreground">
+          Let's get started by:
         </p>
         <div class="flex flex-col items-center">
           <Button
@@ -65,8 +68,14 @@ const onSigninWith = (provider: 'github') => {
           <li>
             <span
               class="font-semibold text-emerald-600 hover:text-emerald-400 dark:text-primary"
+            >RxDB</span>
+            a NoSQL client-side database, to store todos locally.
+          </li>
+          <li>
+            <span
+              class="font-semibold text-emerald-600 hover:text-emerald-400 dark:text-primary"
             >PostgreSQL</span>
-            as a database.
+            as a server side database.
           </li>
           <li>
             <span

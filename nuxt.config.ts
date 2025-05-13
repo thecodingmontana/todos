@@ -12,7 +12,7 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     'nuxt-og-image',
     'nuxt-auth-utils',
-    '@rstore/nuxt-drizzle',
+    '@vueuse/nuxt',
   ],
   devtools: { enabled: true },
   css: ['~/assets/css/tailwind.css'],
@@ -38,6 +38,9 @@ export default defineNuxtConfig({
         clientSecret: process.env.NUXT_OAUTH_GITHUB_CLIENT_SECRET,
         redirectURL: process.env.NUXT_OAUTH_GITHUB_REDIRECT_URL,
       },
+    },
+    public: {
+      mode: process.env.NODE_ENV,
     },
   },
   future: {

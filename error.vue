@@ -58,6 +58,7 @@ onUnmounted(() => {
       <section class="grid flex-1 place-content-center">
         <div v-if="error?.statusCode === 500">
           <h2>{{ error?.statusCode ?? 'Unknown Error' }}</h2>
+          {{ error }}
           <button @click="handleError">
             Clear errors
           </button>

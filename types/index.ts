@@ -4,3 +4,13 @@ export interface User {
   username: string
   avatar: string
 }
+
+export interface Todo {
+  id: string
+  name: string
+  is_completed: boolean
+  userId: string
+  createdAt: string
+  updatedAt: string
+  syncStatus: 'PENDING' | 'SYNCED' | 'FAILED' | 'DIRTY'
+}
