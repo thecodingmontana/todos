@@ -81,6 +81,7 @@ const onHideTodos = () => {
         type="text"
         class="w-full py-3 placeholder:text-zinc-400 placeholder:italic text-2xl bg-transparent border-0 outline-0 text-zinc-500"
         placeholder="What needs to be done?"
+        :disabled="isAddingTodos"
         @keyup.enter="onAddTodos"
       >
       <User />
