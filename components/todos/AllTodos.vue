@@ -30,6 +30,10 @@ const onViewAllActiveTasks = () => {
   uiState.value = 'active'
 }
 
+const onClearCompletedTodos = async () => {
+  await useRxdb().removeCompletedTodos()
+}
+
 const onViewCompletedTasks = () => {
   uiState.value = 'completed'
 }
@@ -85,6 +89,12 @@ const onViewCompletedTasks = () => {
           Completed
         </button>
       </div>
+      <button
+        class="cursor-pointer hover:underline"
+        @click="onClearCompletedTodos"
+      >
+        Clear completed
+      </button>
     </div>
     <div class="mx-1">
       <div class="w-full bg-white py-0.5 border-b shadow-slate-400 shadow-lg" />

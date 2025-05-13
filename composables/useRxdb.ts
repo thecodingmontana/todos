@@ -1,5 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 import { useNetwork } from '@vueuse/core'
+import type { RxDocument } from 'rxdb'
+import { toast } from 'vue-sonner'
 import type { Todo } from '~/types'
 
 export const useRxdb = () => {
@@ -37,6 +39,9 @@ export const useRxdb = () => {
         console.error('Failed to add todo:', err)
         newTodo.syncStatus = 'FAILED'
         await rxdbService.db.todos.insert(newTodo)
+        toast.error('Failed to add todo.', {
+          position: 'top-center',
+        })
         return newTodo
       }
     },
@@ -65,9 +70,12 @@ export const useRxdb = () => {
         await todo.update({ $set: updatedTodo })
       }
       catch (err) {
-        console.error('Failed to sync toggle to server:', err)
+        console.error('Failed to sync toggle todo to server:', err)
         updatedTodo.syncStatus = 'FAILED'
         await todo.update({ $set: updatedTodo })
+        toast.error('Failed to sync toggle todo to server.', {
+          position: 'top-center',
+        })
       }
     },
 
@@ -98,6 +106,9 @@ export const useRxdb = () => {
         console.error('Failed to sync todo update to server:', err)
         updatedTodo.syncStatus = 'FAILED'
         await todo.update({ $set: updatedTodo })
+        toast.error('Failed to sync todo update to server.', {
+          position: 'top-center',
+        })
       }
     },
 
@@ -113,11 +124,40 @@ export const useRxdb = () => {
       }
       catch (err) {
         console.error('Failed to delete todo:', err)
+        toast.error('Failed to delete todo.', {
+          position: 'top-center',
+        })
       }
     },
 
     getAllTodos: async () => {
       return await rxdbService.db.todos.find().exec()
+    },
+
+    removeCompletedTodos: async () => {
+      try {
+        const completedTodos: RxDocument<Todo>[] = await rxdbService.db.todos
+          .find({ selector: { is_completed: true } })
+          .exec()
+
+        await Promise.all(completedTodos.map(todo => todo.remove()))
+
+        if (network.isOnline) {
+          await $fetch('/api/todos/remove-completed', {
+            method: 'DELETE',
+          })
+        }
+
+        toast.success(`Removed ${completedTodos.length} completed todos.`, {
+          position: 'top-center',
+        })
+      }
+      catch (error) {
+        console.error('Error removing completed todos:', error)
+        toast.error('Failed to remove completed todos.', {
+          position: 'top-center',
+        })
+      }
     },
 
     syncWithServer: async () => {
@@ -126,6 +166,9 @@ export const useRxdb = () => {
       }
       catch (err) {
         console.error('Failed to sync with server:', err)
+        toast.error('Failed to sync with server.', {
+          position: 'top-center',
+        })
       }
     },
   }
