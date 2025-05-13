@@ -84,6 +84,14 @@ export const oauth_account = pgTable('oauth_account', {
   }).$onUpdate(() => new Date()),
 })
 
+export const cronJobTable = pgTable('cron_jobs', {
+  id: text('id').notNull(),
+  createdAt: timestamp('created_at', {
+    withTimezone: true,
+    mode: 'date',
+  }).defaultNow(),
+})
+
 // relations
 export const userRelations = relations(user, ({ many }) => ({
   todos: many(todos),

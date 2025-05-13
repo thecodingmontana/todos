@@ -15,6 +15,13 @@
       "when": 1747124116497,
       "tag": "0001_round_triton",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1747143985410,
+      "tag": "0002_breezy_sharon_carter",
+      "breakpoints": true
     }
   ]
 }
