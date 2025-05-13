@@ -56,8 +56,6 @@ export const useRxdb = () => {
         if (network.isOnline) {
           updatedTodo.syncStatus = 'SYNCED'
 
-          console.log(updatedTodo)
-
           await $fetch(`/api/todos/${id}/update`, {
             method: 'PATCH',
             body: updatedTodo,
@@ -68,6 +66,36 @@ export const useRxdb = () => {
       }
       catch (err) {
         console.error('Failed to sync toggle to server:', err)
+        updatedTodo.syncStatus = 'FAILED'
+        await todo.update({ $set: updatedTodo })
+      }
+    },
+
+    updateTodo: async (item: { name: string, id: string }) => {
+      const todo = await rxdbService.db.todos.findOne(item.id).exec()
+      if (!todo) return
+
+      const updatedTodo = {
+        ...todo._data,
+        updatedAt: new Date().toISOString(),
+        syncStatus: 'DIRTY',
+        name: item.name,
+      }
+
+      try {
+        if (network.isOnline) {
+          updatedTodo.syncStatus = 'SYNCED'
+
+          await $fetch(`/api/todos/${item.id}/update`, {
+            method: 'PATCH',
+            body: updatedTodo,
+          })
+        }
+
+        await todo.update({ $set: updatedTodo })
+      }
+      catch (err) {
+        console.error('Failed to sync todo update to server:', err)
         updatedTodo.syncStatus = 'FAILED'
         await todo.update({ $set: updatedTodo })
       }

@@ -11,8 +11,10 @@ const props = defineProps<{
 
 const updateTodoName = async (ev: KeyboardEvent) => {
   const newName: string = (ev.target as HTMLLabelElement).textContent || ''
-  console.log(newName)
-//   await useRxdb().toggleTodo(props?.todo.id)
+  await useRxdb().updateTodo({
+    id: props?.todo.id,
+    name: newName,
+  })
 }
 
 const toggleTodo = async () => {
@@ -20,6 +22,7 @@ const toggleTodo = async () => {
 }
 
 const deleteTodo = async () => {
+  await useRxdb().deleteTodo(props?.todo.id)
 }
 </script>
 
