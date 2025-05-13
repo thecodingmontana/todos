@@ -17,7 +17,7 @@ const onSigninWith = (provider: 'github') => {
 </script>
 
 <template>
-  <div class="flex flex-col max-w-xl w-full items-center gap-3">
+  <div class="flex flex-col max-w-xl w-full items-center gap-3 px-4">
     <h1 class="text-2xl lg:text-3xl font-medium text-center">
       Welcome to Local First Todos by <br>
       <NuxtLink

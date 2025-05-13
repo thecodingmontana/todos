@@ -54,7 +54,7 @@ const onHideTodos = () => {
 </script>
 
 <template>
-  <section class="max-w-md w-full mx-auto my-4">
+  <section class="max-w-md w-full mx-auto my-4 px-2">
     <h1 class="text-7xl text-red-200 dark:text-primary text-center">
       todos
     </h1>
