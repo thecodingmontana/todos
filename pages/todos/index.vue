@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ChevronDown, ChevronUp } from 'lucide-vue-next'
 import { toast } from 'vue-sonner'
+import User from '~/components/shared/User.vue'
 import AllTodos from '~/components/todos/AllTodos.vue'
 
 definePageMeta({
@@ -20,7 +21,7 @@ const hideTodos = ref(false)
 const onAddTodos = async () => {
   isAddingTodos.value = true
   try {
-    if (!todo.value) {
+    if (!todo.value.trim()) {
       return toast.error('Todo name is required!', {
         position: 'top-center',
       })
@@ -50,16 +51,6 @@ const onAddTodos = async () => {
 const onHideTodos = () => {
   hideTodos.value = !hideTodos.value
 }
-
-onMounted(async () => {
-  todos.value = await useRxdb().getAllTodos()
-})
-
-watch(network, async (newVal) => {
-  if (newVal.isOnline) {
-    todos.value = await useRxdb().getAllTodos()
-  }
-})
 </script>
 
 <template>
@@ -92,31 +83,13 @@ watch(network, async (newVal) => {
         placeholder="What needs to be done?"
         @keyup.enter="onAddTodos"
       >
+      <User />
     </div>
     <AllTodos
       v-if="!hideTodos"
       :todos="todos"
     />
-    <div class="mt-6 text-center text-sm text-muted-foreground">
-      <p>
-        Built with <NuxtLink
-          to="https://rxdb.info"
-          target="_blank"
-          class="font-semibold text-emerald-600 hover:text-emerald-400 dark:text-primary hover:underline"
-        >RxDB</NuxtLink>, <NuxtLink
-          to="https://orm.drizzle.team"
-          target="_blank"
-          class="font-semibold text-emerald-600 hover:text-emerald-400 dark:text-primary hover:underline"
-        >Drizzle ORM</NuxtLink>, <NuxtLink
-          to="https://www.postgresql.org"
-          target="_blank"
-          class="font-semibold text-emerald-600 hover:text-emerald-400 dark:text-primary hover:underline"
-        >PostgreSQL</NuxtLink>, and <NuxtLink
-          to="https://nuxt.com"
-          target="_blank"
-          class="font-semibold text-emerald-600 hover:text-emerald-400 dark:text-primary hover:underline"
-        >Nuxt.js</NuxtLink>.
-      </p>
+    <div class="mt-6 text-center text-sm text-muted-foreground space-y-2">
       <p
         v-if="network.isOnline"
         class="text-green-600 font-medium mt-2"
@@ -129,6 +102,34 @@ watch(network, async (newVal) => {
       >
         You're offline - changes will sync when you reconnect
       </p>
+      <div>
+        <p>
+          ⚡ Built with <NuxtLink
+            to="https://rxdb.info"
+            target="_blank"
+            class="font-semibold text-emerald-600 hover:text-emerald-400 dark:text-primary hover:underline"
+          >RxDB</NuxtLink>, <NuxtLink
+            to="https://orm.drizzle.team"
+            target="_blank"
+            class="font-semibold text-emerald-600 hover:text-emerald-400 dark:text-primary hover:underline"
+          >Drizzle ORM</NuxtLink>, <NuxtLink
+            to="https://www.postgresql.org"
+            target="_blank"
+            class="font-semibold text-emerald-600 hover:text-emerald-400 dark:text-primary hover:underline"
+          >PostgreSQL</NuxtLink>, and <NuxtLink
+            to="https://nuxt.com"
+            target="_blank"
+            class="font-semibold text-emerald-600 hover:text-emerald-400 dark:text-primary hover:underline"
+          >Nuxt.js</NuxtLink>.
+        </p>
+        <p>
+          🎩 Inspired by <NuxtLink
+            to="https://github.com/bencodezen/local-first-nuxt-todomvc"
+            target="_blank"
+            class="font-semibold text-emerald-600 hover:text-emerald-400 dark:text-primary hover:underline"
+          >bencodezen</NuxtLink>
+        </p>
+      </div>
     </div>
   </section>
 </template>

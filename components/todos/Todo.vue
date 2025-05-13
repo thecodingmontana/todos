@@ -47,7 +47,7 @@ const deleteTodo = async () => {
         </label>
       </div>
       <Button
-        class="rounded-full absolute self-center hidden group-hover:flex right-0 dark:hover:bg-zinc-100 cursor-pointer"
+        class="rounded-full absolute self-center sm:hidden sm:group-hover:flex right-0 dark:hover:bg-zinc-100 cursor-pointer"
         variant="ghost"
         size="icon"
         @click="deleteTodo"

@@ -39,6 +39,9 @@ export default defineNuxtConfig({
         redirectURL: process.env.NUXT_OAUTH_GITHUB_REDIRECT_URL,
       },
     },
+    public: {
+      mode: process.env.NODE_ENV,
+    },
   },
   future: {
     compatibilityVersion: 4,
