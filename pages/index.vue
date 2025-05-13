@@ -38,6 +38,9 @@ const onSigninWith = (provider: 'github') => {
           >RxDB</NuxtLink>
           package. Built to ensure a seamless offline experience.
         </p>
+        <p class="text-center text-muted-foreground">
+          Let's get started by:
+        </p>
         <div class="flex flex-col items-center">
           <Button
             class="w-fit"
