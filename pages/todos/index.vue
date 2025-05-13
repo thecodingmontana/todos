@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ArrowBigDownIcon, ChevronDown, ChevronUp } from 'lucide-vue-next'
+import { ChevronDown, ChevronUp } from 'lucide-vue-next'
 import { toast } from 'vue-sonner'
-import type { Todo } from '~/types'
+import AllTodos from '~/components/todos/AllTodos.vue'
 
 definePageMeta({
   middleware: ['authenticated'],
@@ -13,7 +13,7 @@ useHead({
 
 const isAddingTodos = ref(false)
 const todo = ref('')
-const todos = ref<Todo[]>([])
+const { todos } = useTodos()
 const network = reactive(useNetwork())
 const hideTodos = ref(false)
 
@@ -27,8 +27,7 @@ const onAddTodos = async () => {
     }
 
     if (todo.value.trim()) {
-      const newTodoItem = await useRxdb().addTodo(todo.value)
-      todos.value.push(newTodoItem!)
+      await useRxdb().addTodo(todo.value)
       todo.value = ''
 
       toast.success('Successfully added a todo!', {
@@ -69,9 +68,10 @@ watch(network, async (newVal) => {
       todos
     </h1>
     <div class="mt-4 flex bg-white items-center space-x-2 border-b shadow-slate-400 dark:shadow shadow-lg">
-      <ArrowBigDownIcon
+      <Icon
         v-if="isAddingTodos"
-        class="w-6 text-gray-400 mx-2 animate-spin"
+        name="hugeicons:reload"
+        class="h-10 w-auto text-gray-400 mx-2 animate-spin"
       />
       <div v-else>
         <ChevronDown
@@ -93,9 +93,10 @@ watch(network, async (newVal) => {
         @keyup.enter="onAddTodos"
       >
     </div>
-
-    {{ todos }}
-    <!-- <Todos v-if="!hideTodos" /> -->
+    <AllTodos
+      v-if="!hideTodos"
+      :todos="todos"
+    />
     <div class="mt-6 text-center text-sm text-muted-foreground">
       <p>
         Built with <NuxtLink

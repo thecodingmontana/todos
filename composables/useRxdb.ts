@@ -56,6 +56,8 @@ export const useRxdb = () => {
         if (network.isOnline) {
           updatedTodo.syncStatus = 'SYNCED'
 
+          console.log(updatedTodo)
+
           await $fetch(`/api/todos/${id}/update`, {
             method: 'PATCH',
             body: updatedTodo,

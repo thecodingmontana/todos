@@ -25,10 +25,10 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    if (!body.is_completed || typeof body.is_completed !== 'boolean') {
+    if (typeof body.is_completed !== 'boolean') {
       throw createError({
         statusCode: 400,
-        statusMessage: 'is_completed is required!',
+        statusMessage: 'is_completed is required and must be a boolean!',
       })
     }
 
