@@ -29,8 +29,8 @@ A full-stack Todo application built with **Nuxt 3**, **RxDB** for offline-first 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/nuxt-rxdb-todos.git
-cd nuxt-rxdb-todos
+git clone https://github.com/thecodingmontana/todos.git
+cd todos
 ```
 
 ## Setup
