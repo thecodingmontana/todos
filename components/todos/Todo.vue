@@ -41,7 +41,8 @@ const deleteTodo = async () => {
             'w-full py-3 placeholder:text-zinc-400 placeholder:italic bg-transparent border-0 outline-0',
             todo.is_completed ? 'line-through text-green-600': 'text-zinc-600',
           )"
-          @keyup.enter="updateTodoName"
+          tabindex="-1"
+          @keyup.enter.prevent="updateTodoName"
         >
           {{ props?.todo.name }}
         </label>
