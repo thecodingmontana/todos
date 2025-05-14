@@ -1,4 +1,9 @@
-CREATE TYPE "public"."syncStatusEnum" AS ENUM('PENDING', 'SYNCED', 'FAILED');--> statement-breakpoint
+CREATE TYPE "public"."syncStatusEnum" AS ENUM('PENDING', 'SYNCED', 'FAILED', 'DIRTY');--> statement-breakpoint
+CREATE TABLE "cron_jobs" (
+	"id" text NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now()
+);
+--> statement-breakpoint
 CREATE TABLE "oauth_account" (
 	"id" text PRIMARY KEY NOT NULL,
 	"userId" text NOT NULL,

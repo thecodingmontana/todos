@@ -1,9 +1,35 @@
 {
-  "id": "fbe76b9f-897b-41b0-b07a-6ff09ec7307d",
+  "id": "56cfbe2d-ed86-4f28-a642-2da9d16789d0",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.cron_jobs": {
+      "name": "cron_jobs",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.oauth_account": {
       "name": "oauth_account",
       "schema": "",
@@ -284,7 +310,8 @@
       "values": [
         "PENDING",
         "SYNCED",
-        "FAILED"
+        "FAILED",
+        "DIRTY"
       ]
     }
   },

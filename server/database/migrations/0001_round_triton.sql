@@ -1,1 +1,0 @@
-ALTER TYPE "public"."syncStatusEnum" ADD VALUE 'DIRTY';

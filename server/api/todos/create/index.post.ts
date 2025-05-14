@@ -1,7 +1,7 @@
 export default defineEventHandler(async (event) => {
   try {
     const session = await requireUserSession(event)
-    const body = await readBody(event) as { name: string, syncStatus: 'PENDING' | 'SYNCED' | 'FAILED', id: string }
+    const body = await readBody(event) as { name: string, syncStatus: 'PENDING' | 'SYNCED' | 'FAILED' | 'DIRTY', id: string, is_completed: boolean }
 
     if (!session) {
       throw createError({
@@ -24,7 +24,14 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    if (!body.syncStatus || !['PENDING', 'SYNCED', 'FAILED'].includes(body.syncStatus)) {
+    if (typeof body.is_completed !== 'boolean') {
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'is_completed is required and must be a boolean!',
+      })
+    }
+
+    if (!body.syncStatus || !['PENDING', 'SYNCED', 'FAILED', 'DIRTY'].includes(body.syncStatus)) {
       throw createError({
         statusCode: 400,
         statusMessage: 'Invalid syncStatus!',
@@ -36,6 +43,7 @@ export default defineEventHandler(async (event) => {
       name: body.name,
       userId: session.user.id,
       syncStatus: body.syncStatus,
+      is_completed: body.is_completed,
       createdAt: new Date(),
       updatedAt: new Date(),
     }).returning()

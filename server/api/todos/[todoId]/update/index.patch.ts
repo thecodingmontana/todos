@@ -2,7 +2,7 @@ export default defineEventHandler(async (event) => {
   try {
     const session = await requireUserSession(event)
     const todoId = getRouterParam(event, 'todoId')
-    const body = await readBody(event) as { name: string, is_completed: boolean, syncStatus: 'PENDING' | 'SYNCED' | 'FAILED' }
+    const body = await readBody(event) as { name: string, is_completed: boolean, syncStatus: 'PENDING' | 'SYNCED' | 'FAILED' | 'DIRTY' }
 
     if (!session) {
       throw createError({
@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    if (!body.syncStatus || !['PENDING', 'SYNCED', 'FAILED'].includes(body.syncStatus)) {
+    if (!body.syncStatus || !['PENDING', 'SYNCED', 'FAILED', 'DIRTY'].includes(body.syncStatus)) {
       throw createError({
         statusCode: 400,
         statusMessage: 'Invalid syncStatus!',
