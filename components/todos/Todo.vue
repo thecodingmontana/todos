@@ -9,6 +9,8 @@ const props = defineProps<{
   todo: Todo
 }>()
 
+const isEditTodo = ref(false)
+
 const updateTodoName = async (ev: KeyboardEvent) => {
   const newName: string = (ev.target as HTMLLabelElement).textContent || ''
   await useRxdb().updateTodo({
@@ -36,12 +38,14 @@ const deleteTodo = async () => {
           @update:model-value="toggleTodo"
         />
         <label
-          contenteditable="true"
+          :contenteditable="isEditTodo"
           :class="cn(
             'w-full py-3 placeholder:text-zinc-400 placeholder:italic bg-transparent border-0 outline-0',
             todo.is_completed ? 'line-through text-green-600': 'text-zinc-600',
           )"
           @keyup.enter="updateTodoName"
+          @mouseover="isEditTodo = true"
+          @mouseleave="isEditTodo = false"
         >
           {{ props?.todo.name }}
         </label>
