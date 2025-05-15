@@ -65,14 +65,13 @@ class RxdbService {
     const localMap = new Map(localTodos.map(t => [t._data.id, t]))
     const serverMap = new Map(serverTodos.map(t => [t.id, t]))
 
-    // 1. PRIORITIZE LOCAL TODOS → SYNC TO SERVER
+    // 1. PUSH LOCAL → SERVER if not present
     for (const local of localTodos) {
       const localTodo = local._data
-      const serverTodo = serverMap.get(localTodo.id)
+      const existsOnServer = serverMap.has(localTodo.id)
 
-      try {
-        if (!serverTodo) {
-          // Local exists, not on server → create it
+      if (!existsOnServer) {
+        try {
           const created = await $fetch<Todo>('/api/todos/create', {
             method: 'POST',
             body: { ...localTodo, syncStatus: 'SYNCED' },
@@ -81,23 +80,47 @@ class RxdbService {
           await local.remove()
           await this._db.todos.insert({ ...created, syncStatus: 'SYNCED' })
         }
-        else if (localTodo.syncStatus === 'DIRTY') {
-          // Local exists and is dirty → update on server
-          const updated = await $fetch<Todo>(`/api/todos/${localTodo.id}/update`, {
+        catch (err) {
+          console.error(`Failed to push local-only todo: ${localTodo.name}`, err)
+          await local.update({ $set: { syncStatus: 'FAILED' } })
+        }
+      }
+    }
+
+    // 2. UPDATE DIRTY LOCAL TODOS on server
+    for (const local of localTodos) {
+      const localTodo = local._data
+      if (localTodo.syncStatus === 'DIRTY') {
+        try {
+          await $fetch(`/api/todos/${localTodo.id}/update`, {
             method: 'PATCH',
             body: { ...localTodo, syncStatus: 'SYNCED' },
           })
 
-          await local.update({ $set: { ...updated, syncStatus: 'SYNCED' } })
+          await local.update({ $set: { syncStatus: 'SYNCED' } })
         }
-      }
-      catch (err) {
-        console.error(`Failed syncing local todo "${localTodo.name}"`, err)
-        await local.update({ $set: { syncStatus: 'FAILED' } })
+        catch (err) {
+          console.error(`Failed to update dirty todo: ${localTodo.name}`, err)
+          await local.update({ $set: { syncStatus: 'FAILED' } })
+        }
       }
     }
 
-    // 2. DELETE SERVER-ONLY TODOS
+    // 3. ADD SERVER → LOCAL if not present
+    for (const serverTodo of serverTodos) {
+      const local = localMap.get(serverTodo.id)
+      if (!local) {
+        await this._db.todos.insert({ ...serverTodo, syncStatus: 'SYNCED' })
+      }
+      else {
+        const localTodo = local._data
+        if (new Date(serverTodo.updatedAt) > new Date(localTodo.updatedAt)) {
+          await local.update({ $set: { ...serverTodo, syncStatus: 'SYNCED' } })
+        }
+      }
+    }
+
+    // 4. DELETE SERVER TODOS that are no longer in local
     for (const serverTodo of serverTodos) {
       if (!localMap.has(serverTodo.id)) {
         try {
@@ -105,7 +128,7 @@ class RxdbService {
           console.log(`Deleted server-only todo "${serverTodo.name}"`)
         }
         catch (err) {
-          console.error(`Failed to delete server-only todo "${serverTodo.name}"`, err)
+          console.error(`Failed to delete server-only todo "${serverTodo.name}":`, err)
         }
       }
     }
