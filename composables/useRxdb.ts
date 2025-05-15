@@ -131,6 +131,10 @@ export const useRxdb = () => {
     },
 
     getAllTodos: async () => {
+      if (network.isOnline) {
+        await rxdbService.syncWithServer()
+      }
+
       return await rxdbService.db.todos.find().exec()
     },
 
