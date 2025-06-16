@@ -12,6 +12,11 @@ useHead({
   title: 'My Todos',
 })
 
+defineOgImageComponent('Nuxt', {
+  title: 'Local First Todos',
+  description: 'My Todos',
+})
+
 const isAddingTodos = ref(false)
 const todo = ref('')
 const { todos } = useTodos()

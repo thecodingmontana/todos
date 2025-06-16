@@ -14,6 +14,12 @@ watch(() => loggedIn.value, (loggedIn) => {
 const onSigninWith = (provider: 'github') => {
   window.location.href = `/api/auth/signin/${provider}`
 }
+
+defineOgImageComponent('Nuxt', {
+  headline: 'Greetings 👋',
+  title: 'Local First Todos',
+  description: 'Welcome to Local First Todos by @codewithmontana',
+})
 </script>
 
 <template>
